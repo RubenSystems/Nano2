@@ -13,6 +13,8 @@ class View: public BaseView {
 
 		View (const std::string & tag, const std::vector< BaseView * > & children, bool close);	
 
+		~View() ;
+
 		std::unordered_map<std::string, std::string> generate() override {
 
 			std::string cssGen = "";
@@ -98,6 +100,14 @@ View::View (const std::string & tag, const std::vector<BaseView *> & children, b
 	this->attr("id", viewID);
 }
 
+
+View::~View(){
+	for (int i = 0; i < this->children.size(); i ++){
+		if (children[i] != nullptr ){
+			delete children[i];
+		}
+	} 
+}
 
 
 BaseView * view(const std::string & tag, const std::vector<BaseView *> & children, bool close) {
