@@ -14,7 +14,7 @@ class App: public BaseView{
 			auto bodyGenerate = this->body->generate();
 			std::string htmlGen = "";
 
-			this->head->addChild( view("style", true, {text(bodyGenerate["css"])}) );
+			this->head->addChild( view("style", {text(bodyGenerate["css"])}, true) );
 			htmlGen += this->head->generate()["html"];
 			htmlGen += bodyGenerate["html"];
 

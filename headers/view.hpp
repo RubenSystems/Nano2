@@ -11,7 +11,7 @@ class View: public BaseView {
  
 	public: 
 
-		View (const std::string & tag, bool close, const std::vector< BaseView * > & children);	
+		View (const std::string & tag, const std::vector< BaseView * > & children, bool close);	
 
 		std::unordered_map<std::string, std::string> generate() override {
 
@@ -82,8 +82,9 @@ class View: public BaseView {
 	private:
 		std::string id;
 		std::string tag;
-		bool close;
 		std::vector<BaseView *> children;
+		bool close;
+		
 		std::unordered_map<std::string, std::vector<std::string>> attributes;
 		std::unordered_map<std::string, std::string> styles;
 
@@ -91,7 +92,7 @@ class View: public BaseView {
 };
 
 
-View::View (const std::string & tag, bool close, const std::vector<BaseView *> & children): tag(tag), close(close), children(children) {
+View::View (const std::string & tag, const std::vector<BaseView *> & children, bool close): tag(tag), children(children), close(close) {
 	auto viewID = UUID::uuid();
 	this->id = viewID;
 	this->attr("id", viewID);
@@ -99,6 +100,6 @@ View::View (const std::string & tag, bool close, const std::vector<BaseView *> &
 
 
 
-BaseView * view(const std::string & tag, bool close, const std::vector<BaseView *> & children) {
-	return new View(tag, close, children);
+BaseView * view(const std::string & tag, const std::vector<BaseView *> & children, bool close) {
+	return new View(tag, children, close);
 }
