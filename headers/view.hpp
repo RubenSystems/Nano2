@@ -44,7 +44,6 @@ class View: public BaseView {
 				}
 				tagGen += i->generate()["html"];
 			}
-			// FIXME: Perform pointer cleanup here;
 
 			if (this->close) {tagGen += "</" + this->tag + ">";}
 
