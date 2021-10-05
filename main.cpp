@@ -1,9 +1,11 @@
 #include "headers/view.hpp"
 #include "headers/text.hpp"
 #include "headers/app.hpp"
+#include "headers/webserver.hpp"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/functional.h>
 
 namespace py = pybind11;
 
@@ -29,4 +31,11 @@ PYBIND11_MODULE(nano2, m) {
 	py::class_<App, BaseView>(m, "App")
 	.def("generate", &App::generate);
 	m.def("app", &app, py::return_value_policy::reference);
+
+
+	// py::class_<Webserver>(m, "Webserver")
+	// .def("start", &Webserver::start)
+	// .def("route", &Webserver::route);
+
+	// m.def("webserver", &webserver, py::return_value_policy::reference);
 }

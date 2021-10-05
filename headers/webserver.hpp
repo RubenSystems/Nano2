@@ -10,7 +10,6 @@
 
 #include "baseview.hpp"
 
-#define PORT 8080
 
 
 typedef std::function< BaseView * (std::vector<std::string>)> Callback;
@@ -20,13 +19,16 @@ class Webserver {
 	
 
 	public:
+
+		Webserver() = default;
+
 		void start();
 
 		void route(const std::pair<std::vector<std::string>, Callback> & callback);
 
 	private: 
 
-		
+		int port = 8080;
 
 		std::string msgGen(const std::string & message);
 
@@ -72,7 +74,7 @@ void Webserver::start () {
 
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
-	address.sin_port = htons( PORT );
+	address.sin_port = htons( this->port );
 	
 	memset(address.sin_zero, '\0', sizeof address.sin_zero);
 	
@@ -89,16 +91,16 @@ void Webserver::start () {
 	}
 
 	while (true) {
-
+		
 		if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
 			perror("In accept");
 			exit(EXIT_FAILURE);
 		}
-
+		std::cout << "I am here - 2" << std::endl;
 		
 		char buffer[30000] = {0};
 		valread = read( new_socket , buffer, 30000 );
-
+		std::cout << "I am here - 3" << std::endl;
 		std::cout << buffer << "--\n\n";
 
 		auto path = this->getPath(std::string(buffer));
@@ -161,3 +163,9 @@ std::pair<int, std::vector<std::string>> Webserver::getPath(const std::string & 
 
 	return {-1, {}};
 }
+
+
+Webserver * webserver() {
+	return new Webserver;
+}
+
